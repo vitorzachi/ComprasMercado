@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Lista Fácil App</string>
+    <string name="novo">Novo</string>
+    <string name="excluirtodos">Excluir Todos</string>
+    <string name="title_activity_nova_lista_compras">Lista Fácil App</string>
+    <string name="action_settings">Settings</string>
+    <string name="lblNovaLista">Nova lista de compras:</string>
+    <string name="btnCancelar">Cancelar</string>
+    <string name="btnSalvar">Salvar</string>
+    <string name="lblDataLista">Data da compra:</string>
+</resources>
