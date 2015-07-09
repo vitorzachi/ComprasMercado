@@ -20,6 +20,10 @@
             android:name=".NovaListaCompras"
             android:label="@string/title_activity_nova_lista_compras" >
         </activity>
+        <activity
+            android:name=".ItensDaListaActivity"
+            android:label="@string/title_activity_itens_da_lista" >
+        </activity>
     </application>
 
 </manifest>

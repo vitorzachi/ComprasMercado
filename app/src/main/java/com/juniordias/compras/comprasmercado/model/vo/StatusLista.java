@@ -1,4 +1,4 @@
-package com.juniordias.compras.comprasmercado.model;
+package com.juniordias.compras.comprasmercado.model.vo;
 
 /**
  * Created by vitor on 08/07/15.

@@ -8,4 +8,8 @@
     <string name="btnCancelar">Cancelar</string>
     <string name="btnSalvar">Salvar</string>
     <string name="lblDataLista">Data da compra:</string>
+    <string name="title_activity_itens_da_lista">ItensDaListaActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="novo_item">+ item</string>
 </resources>

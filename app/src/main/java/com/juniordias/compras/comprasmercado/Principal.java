@@ -7,11 +7,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.juniordias.compras.comprasmercado.adapter.ListaCompraAdapter;
 import com.juniordias.compras.comprasmercado.model.dao.ListaComprasDAO;
 import com.juniordias.compras.comprasmercado.model.helper.ListaComprasOpenHelper;
+import com.juniordias.compras.comprasmercado.model.vo.ListaCompras;
 
 
 public class Principal extends ActionBarActivity {
@@ -30,6 +34,20 @@ public class Principal extends ActionBarActivity {
 
         this.adapter = new ListaCompraAdapter(this, cursor);
         this.listView.setAdapter(adapter);
+        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListaCompras listaCompras=new ListaCompras();
+                listaCompras.setId(Long.valueOf(id).intValue());
+                listaCompras.setTitulo(((TextView) view.findViewById(R.id.lblNomeListaCompras)).getText().toString());
+
+                Intent intent = new Intent(Principal.this, ItensDaListaActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(ItensDaListaActivity.chaveLista, listaCompras);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 2);
+            }
+        });
     }
 
     @Override

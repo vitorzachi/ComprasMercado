@@ -1,13 +1,12 @@
 package com.juniordias.compras.comprasmercado.model.vo;
 
-import com.juniordias.compras.comprasmercado.model.StatusLista;
-
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Jrdiaz on 22/06/2015.
  */
-public class ListaCompras {
+public class ListaCompras implements Serializable {
     private Integer _id;
     private String titulo;
     private Double valorTotal;

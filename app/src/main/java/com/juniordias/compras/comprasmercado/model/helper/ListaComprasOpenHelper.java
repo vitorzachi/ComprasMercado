@@ -32,7 +32,6 @@ public class ListaComprasOpenHelper extends SQLiteOpenHelper {
         sqlAtiv.append("produto Text, ");
         sqlAtiv.append("qtde Double, ");
         sqlAtiv.append("valorUnitario Double, ");
-        sqlAtiv.append("valorTotal Double, ");
         sqlAtiv.append("status Text, ");
         sqlAtiv.append("listaCompras Integer References listacompras(_id) ) ");
         db.execSQL(sqlAtiv.toString());
