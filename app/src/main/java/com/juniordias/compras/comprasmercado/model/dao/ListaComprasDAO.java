@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.juniordias.compras.comprasmercado.model.StatusLista;
 import com.juniordias.compras.comprasmercado.model.helper.ListaComprasOpenHelper;
 import com.juniordias.compras.comprasmercado.model.vo.ListaCompras;
 
@@ -33,8 +34,8 @@ public class ListaComprasDAO {
         ContentValues valores = new ContentValues();
 
         valores.put("titulo", listaCompras.getTitulo());
-        //valores.put("data", listaCompras.getData().toString());
-        //valores.put("status", "Aberta");
+        valores.put("data", listaCompras.getData().getTime());
+        valores.put("status", StatusLista.Aberta.name());
         //valores.put("valorTotal", "0,00");
         db.insert("listacompras", null, valores);
         db.close();

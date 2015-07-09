@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.juniordias.compras.comprasmercado.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.zip.Inflater;
 
 /**
@@ -37,6 +39,7 @@ public class ListaCompraAdapter extends CursorAdapter {
         TextView lblDataCompra = (TextView) view.findViewById(R.id.lblDataCompra);
 
         lblTitulo.setText(cursor.getString(cursor.getColumnIndex("titulo")));
-        lblDataCompra.setText(cursor.getString(cursor.getColumnIndex("data")));
+        lblDataCompra.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(
+                cursor.getLong(cursor.getColumnIndex("data")))));
     }
 }

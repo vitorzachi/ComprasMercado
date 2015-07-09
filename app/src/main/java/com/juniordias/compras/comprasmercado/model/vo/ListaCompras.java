@@ -1,16 +1,18 @@
 package com.juniordias.compras.comprasmercado.model.vo;
 
+import com.juniordias.compras.comprasmercado.model.StatusLista;
+
 import java.util.Date;
 
 /**
  * Created by Jrdiaz on 22/06/2015.
  */
 public class ListaCompras {
-    private Integer id;
+    private Integer _id;
     private String titulo;
     private Double valorTotal;
     private Date data;
-    private String status;
+    private StatusLista status;
 
     public Date getData() {
         return data;
@@ -20,11 +22,11 @@ public class ListaCompras {
         this.data = data;
     }
 
-    public String getStatus() {
+    public StatusLista getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusLista status) {
         this.status = status;
     }
 
@@ -37,11 +39,11 @@ public class ListaCompras {
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getTitulo() {

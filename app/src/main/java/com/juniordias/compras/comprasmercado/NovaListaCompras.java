@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,10 +12,10 @@ import android.widget.EditText;
 import com.juniordias.compras.comprasmercado.model.dao.ListaComprasDAO;
 import com.juniordias.compras.comprasmercado.model.vo.ListaCompras;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class NovaListaCompras extends Activity {
@@ -29,21 +26,21 @@ public class NovaListaCompras extends Activity {
         setContentView(R.layout.activity_nova_lista_compras);
     }
 
-    public void salvar(View v){
+    public void salvar(View v) {
         //cria a variavel e armazena o que esta nos campos digitados pelo usuario
         EditText edtNomeLista = (EditText) findViewById(R.id.edtNomeLista);
-        DatePicker edtDataCompra = (DatePicker) findViewById(R.id.datePicker);
+        EditText edtDataCompra = (EditText) findViewById(R.id.edtDataCompra);
 
         //Instacia a ListaComprasVO e seta os dados na variavel
         ListaCompras listaCompras = new ListaCompras();
         listaCompras.setTitulo(edtNomeLista.getText().toString());
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, edtDataCompra.getDayOfMonth());
-        calendar.set(Calendar.MONTH, edtDataCompra.getMonth());
-        calendar.set(Calendar.YEAR, edtDataCompra.getYear());
-        listaCompras.setData(calendar.getTime());
 
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(edtDataCompra.getText().toString());
+            listaCompras.setData(date);
+        } catch (ParseException e) {
 
+        }
         //instancia o DAO e usa o metodo salvar para gravar os dados
         ListaComprasDAO listaComprasDAO = new ListaComprasDAO(this);
         listaComprasDAO.salvar(listaCompras);
@@ -52,13 +49,20 @@ public class NovaListaCompras extends Activity {
         finish();
     }
 
-    public void onDateClick(View view){
-        DialogFragment newFragment = new DatePickerFragment();
+    public void onDateClick(View view) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setDatePickerFragment(this);
         newFragment.show(getFragmentManager(), "datePicker");
     }
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
+
+        private  NovaListaCompras novaListaCompras;
+
+        public void  setDatePickerFragment(NovaListaCompras novaListaCompras) {
+            this.novaListaCompras = novaListaCompras;
+        }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -73,7 +77,8 @@ public class NovaListaCompras extends Activity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
+            EditText edtDataCompra = (EditText) novaListaCompras.findViewById(R.id.edtDataCompra);
+            edtDataCompra.setText(String.format("%02d/%02d/%04d", day, month, year));
         }
     }
 }
