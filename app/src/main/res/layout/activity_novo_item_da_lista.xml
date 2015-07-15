@@ -6,28 +6,71 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.juniordias.compras.comprasmercado.NovaListaCompras">
+    tools:context="com.juniordias.compras.comprasmercado.NovoItemDaListaActivity">
+
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="@string/lblNovaLista"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/nome_item"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
-        android:id="@+id/edtNomeLista"
+        android:id="@+id/nomeProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="10dp" />
+        android:layout_below="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nomeProduto"
+        android:text="@string/qtde"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/qtde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView4"
+        android:numeric="decimal" />
+
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/qtde"
+        android:text="@string/unitario"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/unitario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/qtde"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/qtde"
+        android:layout_below="@+id/textView5"
+        android:numeric="decimal" />
 
     <Button
         android:id="@+id/btnCancelar"
@@ -53,28 +96,15 @@
         android:onClick="salvar"
         android:text="@string/btnSalvar" />
 
-    <EditText
-        android:id="@+id/edtDataCompra"
+    <Button
+        android:id="@+id/microfone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:inputType="date"
-        android:onClick="onDateClick" />
+        android:layout_centerVertical="true"
+        android:onClick="itensPorVoz"
+        android:text="@string/voz" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/edtNomeLista"
-        android:layout_marginTop="10dp"
-        android:text="@string/lblDataLista"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.juniordias.compras.comprasmercado;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class ItensDaListaActivity extends ActionBarActivity {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(listaCompras.getTitulo());
         Cursor cursor = this.listaComprasDAO.listar(listaCompras);
+        adapter=new ItemListaCompraAdapter(this, cursor);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -50,11 +53,30 @@ public class ItensDaListaActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_novo) {
-            Toast.makeText(this, "Sera implementado", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, NovoItemDaListaActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(chaveLista, listaCompras);
+            intent.putExtras(bundle);
 
+            startActivityForResult(intent, 4);
+            return true;
+        }
+
+        if (id == R.id.action_onde) {
+            Intent intent = new Intent(this, OndeComprarActivity.class);
+            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 4){
+            Cursor cursor = this.listaComprasDAO.listar(listaCompras);
+            adapter.changeCursor(cursor);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

@@ -38,10 +38,10 @@ public class ItemDaListaDAO {
         valores.put("produto", item.getProduto());
         valores.put("qtde", item.getQtde());
         valores.put("valorUnitario", item.getValorUnitario());
-        valores.put("listacompras", item.getListaCompras().getId());
+        valores.put("listaCompras", item.getListaCompras().getId());
         valores.put("status", StatusLista.Aberta.name());
         //valores.put("valorTotal", "0,00");
-        db.insert("itenscompras", null, valores);
+        long inserted = db.insert("itenscompras", null, valores);
         db.close();
 
     }

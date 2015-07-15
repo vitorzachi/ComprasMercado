@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.juniordias.compras.comprasmercado.R;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
  * Created by Jrdiaz on 04/07/2015.
  */
 public class ItemListaCompraAdapter extends CursorAdapter {
-
+private static final DecimalFormat DECIMAL_FORMAT=new DecimalFormat("#0.00");
     private LayoutInflater inflater;
 
     public ItemListaCompraAdapter(Context context, Cursor c) {
@@ -37,6 +38,12 @@ public class ItemListaCompraAdapter extends CursorAdapter {
         TextView lblDescItem = (TextView) view.findViewById(R.id.lblDesItem);
 
         lblNomeItem.setText(cursor.getString(cursor.getColumnIndex("produto")));
-        lblDescItem.setText("2 X 2,99 = 5,98");
+        Double qtd = cursor.getDouble(cursor.getColumnIndex("qtde"));
+        Double valor = cursor.getDouble(cursor.getColumnIndex("valorUnitario"));
+
+        valor = valor == null ? 0d : valor;
+        qtd = qtd == null ? 0d : qtd;
+
+        lblDescItem.setText(String.format("%s X $ %s = $ %s", qtd, valor, DECIMAL_FORMAT.format(qtd*valor) ));
     }
 }

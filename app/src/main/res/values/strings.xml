@@ -8,8 +8,16 @@
     <string name="btnCancelar">Cancelar</string>
     <string name="btnSalvar">Salvar</string>
     <string name="lblDataLista">Data da compra:</string>
-    <string name="title_activity_itens_da_lista">ItensDaListaActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="novo_item">+ item</string>
+    <string name="title_activity_novo_item_da_lista">Novo item</string>
+    <string name="title_activity_itens_da_lista">Itens</string>
+    <string name="nome_item">Nome do item</string>
+    <string name="qtde">Qtde</string>
+    <string name="unitario">Unitário</string>
+    <string name="voz">Voz</string>
+    <string name="vozHelp">Fale os itens e a cada novo item fale "mais"</string>
+    <string name="onde_comprar">Onde comprar</string>
+    <string name="vc_esta_aqui">Você</string>
+    <string name="title_activity_onde_comprar">Onde comprar</string>
 </resources>

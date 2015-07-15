@@ -24,6 +24,15 @@ public class NovaListaCompras extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nova_lista_compras);
+
+        ((EditText) findViewById(R.id.edtDataCompra)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    onDateClick();
+                }
+            }
+        });
     }
 
     public void salvar(View v) {
@@ -49,7 +58,12 @@ public class NovaListaCompras extends Activity {
         finish();
     }
 
-    public void onDateClick(View view) {
+    public void cancelar(View view){
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    public void onDateClick() {
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.setDatePickerFragment(this);
         newFragment.show(getFragmentManager(), "datePicker");
@@ -58,9 +72,9 @@ public class NovaListaCompras extends Activity {
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
-        private  NovaListaCompras novaListaCompras;
+        private NovaListaCompras novaListaCompras;
 
-        public void  setDatePickerFragment(NovaListaCompras novaListaCompras) {
+        public void setDatePickerFragment(NovaListaCompras novaListaCompras) {
             this.novaListaCompras = novaListaCompras;
         }
 

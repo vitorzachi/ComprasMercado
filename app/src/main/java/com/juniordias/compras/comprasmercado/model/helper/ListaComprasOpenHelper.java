@@ -28,7 +28,7 @@ public class ListaComprasOpenHelper extends SQLiteOpenHelper {
 
         StringBuffer sqlAtiv = new StringBuffer();
         sqlAtiv.append("create table itenscompras(");
-        sqlAtiv.append("_id Integer primary key, ");
+        sqlAtiv.append("_id integer primary key, ");
         sqlAtiv.append("produto Text, ");
         sqlAtiv.append("qtde Double, ");
         sqlAtiv.append("valorUnitario Double, ");
