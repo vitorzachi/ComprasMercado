@@ -24,6 +24,7 @@ import java.util.List;
 public class NovoItemDaListaActivity extends ActionBarActivity {
     private static final int REQUEST_CODE = 1234;
     private static ListaCompras listaCompras;
+    private ItensCompras itemCorrente;
     private ItemDaListaDAO itemDaListaDAO;
     private Button btnVoz;
 
@@ -32,12 +33,13 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_item_da_lista);
 
-        if ((ListaCompras) getIntent().getSerializableExtra(ItensDaListaActivity.chaveLista) != null) {
-            listaCompras =(ListaCompras)getIntent().getSerializableExtra(ItensDaListaActivity.chaveLista);
+        if (getIntent().getSerializableExtra(ItensDaListaActivity.chaveLista) != null) {
+            listaCompras = (ListaCompras) getIntent().getSerializableExtra(ItensDaListaActivity.chaveLista);
         }
 
+
         itemDaListaDAO = new ItemDaListaDAO(this);
-        btnVoz = (Button)findViewById(R.id.microfone);
+        btnVoz = (Button) findViewById(R.id.microfone);
 
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(
@@ -45,6 +47,16 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
         if (activities.size() == 0) {
             btnVoz.setEnabled(false);
             btnVoz.setVisibility(View.GONE);
+        }
+
+        if (getIntent().getSerializableExtra(ItensDaListaActivity.chaveItem) != null) {
+            itemCorrente = itemDaListaDAO.findOne(
+                    (Integer) getIntent().getSerializableExtra(ItensDaListaActivity.chaveItem));
+            btnVoz.setVisibility(View.GONE);
+
+            ((EditText) findViewById(R.id.nomeProduto)).setText(itemCorrente.getProduto());
+            ((EditText) findViewById(R.id.qtde)).setText(itemCorrente.getQtde().toString());
+            ((EditText) findViewById(R.id.unitario)).setText(itemCorrente.getValorUnitario().toString());
         }
     }
 
@@ -66,11 +78,11 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
 
-            if(matches.size()>0){
+            if (matches.size() > 0) {
                 String firstMatch = matches.get(0);
                 String[] splitted = firstMatch.split("\\smais\\s|\\smas\\s");
                 List<ItensCompras> itens = new ArrayList<>(splitted.length);
-                for (String nome :splitted) {
+                for (String nome : splitted) {
                     ItensCompras item = new ItensCompras();
                     item.setListaCompras(listaCompras);
                     item.setProduto(nome);
@@ -95,8 +107,10 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_voz) {
-
+        if (id == R.id.action_excluir) {
+            if(itemCorrente !=null){
+                excluir();
+            }
 
             return true;
         }
@@ -105,29 +119,46 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
     }
 
     public void salvar(View view) {
-        ItensCompras item = new ItensCompras();
-        item.setListaCompras(listaCompras);
-        item.setProduto(((EditText) findViewById(R.id.nomeProduto)).getText().toString());
-        try{
-            item.setQtde(Double.valueOf(((EditText) findViewById(R.id.qtde)).getText().toString()));
-        }catch (NumberFormatException e){
+        if (itemCorrente != null) {
+            preencheCampos(itemCorrente);
+            itemDaListaDAO.alterar(itemCorrente);
+            setResult(RESULT_OK);
+            finish();
+        } else {
+            ItensCompras item = new ItensCompras();
+            item.setListaCompras(listaCompras);
+            preencheCampos(item);
 
+            salvarItens(Arrays.asList(item));
         }
-        try{
-            item.setValorUnitario(Double.valueOf(((EditText) findViewById(R.id.unitario)).getText().toString()));
-        }catch (NumberFormatException e){
-
-        }
-
-        salvarItens(Arrays.asList(item));
     }
 
-    private void salvarItens(List<ItensCompras> itens){
-        for (ItensCompras item :itens) {
+    public void excluir() {
+        itemDaListaDAO.apagar(itemCorrente.getId());
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    private void salvarItens(List<ItensCompras> itens) {
+        for (ItensCompras item : itens) {
             itemDaListaDAO.salvar(item);
         }
 
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void preencheCampos(ItensCompras item) {
+        item.setProduto(((EditText) findViewById(R.id.nomeProduto)).getText().toString());
+        try {
+            item.setQtde(Double.valueOf(((EditText) findViewById(R.id.qtde)).getText().toString()));
+        } catch (NumberFormatException e) {
+
+        }
+        try {
+            item.setValorUnitario(Double.valueOf(((EditText) findViewById(R.id.unitario)).getText().toString()));
+        } catch (NumberFormatException e) {
+
+        }
     }
 }

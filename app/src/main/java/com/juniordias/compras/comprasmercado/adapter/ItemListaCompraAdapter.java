@@ -2,6 +2,7 @@ package com.juniordias.compras.comprasmercado.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.juniordias.compras.comprasmercado.R;
+import com.juniordias.compras.comprasmercado.model.vo.StatusLista;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -18,7 +20,7 @@ import java.util.Date;
  * Created by Jrdiaz on 04/07/2015.
  */
 public class ItemListaCompraAdapter extends CursorAdapter {
-private static final DecimalFormat DECIMAL_FORMAT=new DecimalFormat("#0.00");
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#0.00");
     private LayoutInflater inflater;
 
     public ItemListaCompraAdapter(Context context, Cursor c) {
@@ -44,6 +46,13 @@ private static final DecimalFormat DECIMAL_FORMAT=new DecimalFormat("#0.00");
         valor = valor == null ? 0d : valor;
         qtd = qtd == null ? 0d : qtd;
 
-        lblDescItem.setText(String.format("%s X $ %s = $ %s", qtd, valor, DECIMAL_FORMAT.format(qtd*valor) ));
+        lblDescItem.setText(String.format("%s X $ %s = $ %s", qtd, valor, DECIMAL_FORMAT.format(qtd * valor)));
+
+        String status = cursor.getString(cursor.getColumnIndex("status"));
+        if (StatusLista.Finalizada.name().equals(status)){
+            view.setBackgroundColor(Color.parseColor("#66C285"));
+        }else{
+            view.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 }

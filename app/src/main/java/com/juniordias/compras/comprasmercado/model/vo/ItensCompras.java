@@ -1,9 +1,11 @@
 package com.juniordias.compras.comprasmercado.model.vo;
 
+import java.io.Serializable;
+
 /**
  * Created by Jrdiaz on 22/06/2015.
  */
-public class ItensCompras {
+public class ItensCompras implements Serializable{
     private Integer _id;
     private String produto;
     private Double qtde;

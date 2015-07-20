@@ -27,6 +27,15 @@ public class ListaComprasDAO {
         return crs;
     }
 
+    public void apagar(Integer id) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        long itensDeletados = db.delete("itenscompras", " listacompras=?", new String[]{id.toString()});
+        long listaDeletados = db.delete("listacompras", " _id=?", new String[]{id.toString()});
+        db.close();
+
+    }
+
     public void salvar(ListaCompras listaCompras) {
 
         SQLiteDatabase db = helper.getWritableDatabase();
