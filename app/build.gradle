@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'comprasMercado'
             keyPassword '123456'
-            storeFile file('comprasMercado.jks')
+            storeFile file(System.getenv('HOMEPATH')+'/comprasMercado.jks')
             storePassword '123456'
         }
     }
