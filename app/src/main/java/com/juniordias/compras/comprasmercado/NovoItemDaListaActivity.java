@@ -40,6 +40,8 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
 
         itemDaListaDAO = new ItemDaListaDAO(this);
         btnVoz = (Button) findViewById(R.id.microfone);
+        btnVoz.setVisibility(View.VISIBLE);
+
 
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(
@@ -160,5 +162,9 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
         } catch (NumberFormatException e) {
 
         }
+    }
+
+    public void cancelar(View view){
+        finish();
     }
 }

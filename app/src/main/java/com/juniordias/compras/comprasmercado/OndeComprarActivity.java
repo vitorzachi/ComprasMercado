@@ -64,15 +64,15 @@ public class OndeComprarActivity extends FragmentActivity implements LocationLis
     @Override
     public void onLocationChanged(Location location) {
         locationAtual = location;
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.vc_esta_aqui)));
-
-        CameraUpdate center= CameraUpdateFactory.newLatLng(latLng);
-        CameraUpdate zoom= CameraUpdateFactory.zoomTo(13);
-
-        mMap.moveCamera(center);
-        mMap.animateCamera(zoom);
+        if(location !=null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            mMap.clear();
+            mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.vc_esta_aqui)));
+            CameraUpdate center= CameraUpdateFactory.newLatLng(latLng);
+            CameraUpdate zoom= CameraUpdateFactory.zoomTo(13);
+            mMap.moveCamera(center);
+            mMap.animateCamera(zoom);
+        }
     }
 
     @Override
