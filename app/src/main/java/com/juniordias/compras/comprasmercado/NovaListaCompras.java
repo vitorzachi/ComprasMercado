@@ -92,7 +92,7 @@ public class NovaListaCompras extends Activity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             EditText edtDataCompra = (EditText) novaListaCompras.findViewById(R.id.edtDataCompra);
-            edtDataCompra.setText(String.format("%02d/%02d/%04d", day, month, year));
+            edtDataCompra.setText(String.format("%02d/%02d/%04d", day, month+1, year));
         }
     }
 }
