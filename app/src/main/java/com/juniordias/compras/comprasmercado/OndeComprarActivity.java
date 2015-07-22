@@ -22,6 +22,7 @@ public class OndeComprarActivity extends FragmentActivity implements LocationLis
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LocationManager locationManager;
     private Location locationAtual;
+    private boolean cameraZoomAplicado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +60,22 @@ public class OndeComprarActivity extends FragmentActivity implements LocationLis
     }
 
 
-
-
     @Override
     public void onLocationChanged(Location location) {
         locationAtual = location;
-        if(location !=null) {
+
+        if (location != null) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             mMap.clear();
             mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.vc_esta_aqui)));
-            CameraUpdate center= CameraUpdateFactory.newLatLng(latLng);
-            CameraUpdate zoom= CameraUpdateFactory.zoomTo(13);
-            mMap.moveCamera(center);
-            mMap.animateCamera(zoom);
+
+            if (!cameraZoomAplicado) {
+                CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(13);
+                mMap.moveCamera(center);
+                mMap.animateCamera(zoom);
+                cameraZoomAplicado = true;
+            }
         }
     }
 
