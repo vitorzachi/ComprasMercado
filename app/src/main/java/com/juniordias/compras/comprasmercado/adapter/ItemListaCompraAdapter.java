@@ -13,8 +13,6 @@ import com.juniordias.compras.comprasmercado.R;
 import com.juniordias.compras.comprasmercado.model.vo.StatusLista;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by Jrdiaz on 04/07/2015.
@@ -46,7 +44,8 @@ public class ItemListaCompraAdapter extends CursorAdapter {
         valor = valor == null ? 0d : valor;
         qtd = qtd == null ? 0d : qtd;
 
-        lblDescItem.setText(String.format("%s X $ %s = $ %s", qtd, valor, DECIMAL_FORMAT.format(qtd * valor)));
+        lblDescItem.setText(String.format("%s X $ %s = $ %s", qtd.intValue(), valor,
+                DECIMAL_FORMAT.format(qtd * valor)));
 
         String status = cursor.getString(cursor.getColumnIndex("status"));
         if (StatusLista.Finalizada.name().equals(status)){

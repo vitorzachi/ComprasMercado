@@ -3,9 +3,9 @@ package com.juniordias.compras.comprasmercado;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,8 +57,10 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
             btnVoz.setVisibility(View.GONE);
 
             ((EditText) findViewById(R.id.nomeProduto)).setText(itemCorrente.getProduto());
-            ((EditText) findViewById(R.id.qtde)).setText(itemCorrente.getQtde().toString());
-            ((EditText) findViewById(R.id.unitario)).setText(itemCorrente.getValorUnitario().toString());
+            if (itemCorrente.getQtde() > 0)
+                ((EditText) findViewById(R.id.qtde)).setText(itemCorrente.getQtde().toString());
+            if (itemCorrente.getValorUnitario() > 0)
+                ((EditText) findViewById(R.id.unitario)).setText(itemCorrente.getValorUnitario().toString());
         }
     }
 
@@ -87,8 +89,20 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
                 for (String nome : splitted) {
                     ItensCompras item = new ItensCompras();
                     item.setListaCompras(listaCompras);
-                    item.setProduto(nome);
-                    item.setQtde(0d);
+
+                    String[] nomeSplit = nome.split(" ");
+
+                    if (nomeSplit.length > 1) {
+                        try {
+                            Double qtd = Double.parseDouble(nomeSplit[0]);
+                            item.setProduto(nomeSplit[1]);
+                            item.setQtde(qtd);
+                        } catch (NumberFormatException e) {
+                            item.setProduto(nome);
+                            item.setQtde(0d);
+                        }
+                    }
+
                     item.setValorUnitario(0d);
                     itens.add(item);
                 }
@@ -110,7 +124,7 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_excluir) {
-            if(itemCorrente !=null){
+            if (itemCorrente != null) {
                 excluir();
             }
 
@@ -155,16 +169,17 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
         try {
             item.setQtde(Double.valueOf(((EditText) findViewById(R.id.qtde)).getText().toString()));
         } catch (NumberFormatException e) {
-
+            item.setQtde(0d);
         }
         try {
             item.setValorUnitario(Double.valueOf(((EditText) findViewById(R.id.unitario)).getText().toString()));
         } catch (NumberFormatException e) {
-
+            item.setValorUnitario(0d);
         }
     }
 
-    public void cancelar(View view){
+    public void cancelar(View view) {
         finish();
     }
+
 }

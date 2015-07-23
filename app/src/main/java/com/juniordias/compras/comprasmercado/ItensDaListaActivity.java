@@ -2,19 +2,23 @@ package com.juniordias.compras.comprasmercado;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.juniordias.compras.comprasmercado.adapter.ItemListaCompraAdapter;
 import com.juniordias.compras.comprasmercado.dragAndDrop.SwipeDetector;
+import com.juniordias.compras.comprasmercado.model.Totais;
 import com.juniordias.compras.comprasmercado.model.dao.ItemDaListaDAO;
 import com.juniordias.compras.comprasmercado.model.dao.ListaComprasDAO;
 import com.juniordias.compras.comprasmercado.model.vo.ListaCompras;
+
+import java.text.DecimalFormat;
 
 
 public class ItensDaListaActivity extends ActionBarActivity {
@@ -48,24 +52,26 @@ public class ItensDaListaActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long id) {
-                if(swipeDetector.swipeDetected()) {
-                    if(swipeDetector.getAction() == SwipeDetector.Action.LR) {
+                if (swipeDetector.swipeDetected()) {
+                    if (swipeDetector.getAction() == SwipeDetector.Action.LR) {
 
                         itensComprasDAO.marcarFinalizado(Long.valueOf(id).intValue());
-                         ItensDaListaActivity.this.refresh();
+                        ItensDaListaActivity.this.refresh();
                     }
 
-                    if(swipeDetector.getAction() == SwipeDetector.Action.RL) {
+                    if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
                         itensComprasDAO.marcarNaoFinalizado(Long.valueOf(id).intValue());
                         ItensDaListaActivity.this.refresh();
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(ItensDaListaActivity.this, NovoItemDaListaActivity.class);
                     intent.putExtra(ItensDaListaActivity.chaveItem, Long.valueOf(id).intValue());
                     ItensDaListaActivity.this.startActivityForResult(intent, 4);
                 }
-            }});
+            }
+        });
 
+        atualizaTotais();
     }
 
     @Override
@@ -116,5 +122,14 @@ public class ItensDaListaActivity extends ActionBarActivity {
         Cursor cursor = this.itensComprasDAO.listar(listaCompras);
         adapter.changeCursor(cursor);
         adapter.notifyDataSetChanged();
+        atualizaTotais();
+    }
+
+    private void atualizaTotais() {
+        Totais totais = itensComprasDAO.totalizar(listaCompras);
+
+        ((TextView) findViewById(R.id.tv_footer))
+                .setText(getString(R.string.totalLista, totais.getItens(),
+                        "$ " + new DecimalFormat("#0.00").format(totais.getTotal())));
     }
 }
