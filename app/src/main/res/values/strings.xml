@@ -22,4 +22,8 @@
     <string name="title_activity_onde_comprar">Onde comprar</string>
     <string name="excluir">Excluir</string>
     <string name="totalLista">%1$s itens totalizando %2$s</string>
+    <string name="totalItens">%1$s itens</string>
+    <string name="marcadoOk">Marcado como OK</string>
+    <string name="marcadoNaoOk">Marcado como pendente</string>
+
 </resources>

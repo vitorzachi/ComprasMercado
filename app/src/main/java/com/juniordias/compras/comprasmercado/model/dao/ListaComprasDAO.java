@@ -5,9 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.juniordias.compras.comprasmercado.model.vo.StatusLista;
 import com.juniordias.compras.comprasmercado.model.helper.ListaComprasOpenHelper;
 import com.juniordias.compras.comprasmercado.model.vo.ListaCompras;
+import com.juniordias.compras.comprasmercado.model.vo.StatusLista;
 
 /**
  * Created by Jrdiaz on 04/07/2015.
@@ -23,7 +23,9 @@ public class ListaComprasDAO {
     public Cursor listar() {
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        Cursor crs = db.query("listacompras", new String[]{"_id", "titulo", "data"}, null, null, null, null, null);
+//        Cursor crs = db.query("listacompras", new String[]{"_id", "titulo", "data"}, null, null, null, null, null);
+        Cursor crs = db.rawQuery("select l._id, l.titulo, l.data, count(i._id) as contador " +
+                "from listacompras l left join itenscompras i", null);
         return crs;
     }
 

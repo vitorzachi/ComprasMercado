@@ -49,7 +49,7 @@ public class ItemListaCompraAdapter extends CursorAdapter {
 
         String status = cursor.getString(cursor.getColumnIndex("status"));
         if (StatusLista.Finalizada.name().equals(status)){
-            view.setBackgroundColor(Color.parseColor("#66C285"));
+            view.setBackgroundColor(Color.parseColor("#b4f4cf"));
         }else{
             view.setBackgroundColor(Color.TRANSPARENT);
         }

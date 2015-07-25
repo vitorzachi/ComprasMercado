@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.juniordias.compras.comprasmercado.adapter.ItemListaCompraAdapter;
 import com.juniordias.compras.comprasmercado.dragAndDrop.SwipeDetector;
@@ -29,7 +30,7 @@ public class ItensDaListaActivity extends ActionBarActivity {
     private ListaCompras listaCompras;
     private ItemDaListaDAO itensComprasDAO;
     private ListaComprasDAO listaComprasDAO;
-    private SwipeDetector swipeDetector=new SwipeDetector();
+    private SwipeDetector swipeDetector = new SwipeDetector();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class ItensDaListaActivity extends ActionBarActivity {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(listaCompras.getTitulo());
         Cursor cursor = this.itensComprasDAO.listar(listaCompras);
-        adapter=new ItemListaCompraAdapter(this, cursor);
+        adapter = new ItemListaCompraAdapter(this, cursor);
         listView.setAdapter(adapter);
 
         listView.setOnTouchListener(swipeDetector);
@@ -57,11 +58,14 @@ public class ItensDaListaActivity extends ActionBarActivity {
 
                         itensComprasDAO.marcarFinalizado(Long.valueOf(id).intValue());
                         ItensDaListaActivity.this.refresh();
+                        Toast.makeText(ItensDaListaActivity.this, getString(R.string.marcadoOk), Toast.LENGTH_SHORT).show();
                     }
 
                     if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
                         itensComprasDAO.marcarNaoFinalizado(Long.valueOf(id).intValue());
                         ItensDaListaActivity.this.refresh();
+                        Toast.makeText(ItensDaListaActivity.this, getString(R.string.marcadoNaoOk), Toast.LENGTH_SHORT).show();
+
                     }
                 } else {
                     Intent intent = new Intent(ItensDaListaActivity.this, NovoItemDaListaActivity.class);
@@ -113,12 +117,12 @@ public class ItensDaListaActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 4){
+        if (requestCode == 4) {
             refresh();
         }
     }
 
-    public void refresh(){
+    public void refresh() {
         Cursor cursor = this.itensComprasDAO.listar(listaCompras);
         adapter.changeCursor(cursor);
         adapter.notifyDataSetChanged();

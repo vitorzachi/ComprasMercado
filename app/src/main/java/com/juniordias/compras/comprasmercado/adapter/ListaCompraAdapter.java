@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
@@ -13,7 +12,6 @@ import com.juniordias.compras.comprasmercado.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.Inflater;
 
 /**
  * Created by Jrdiaz on 04/07/2015.
@@ -37,7 +35,9 @@ public class ListaCompraAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         TextView lblTitulo = (TextView) view.findViewById(R.id.lblNomeListaCompras);
         TextView lblDataCompra = (TextView) view.findViewById(R.id.lblDataCompra);
+        TextView lblItens = (TextView) view.findViewById(R.id.lblItens);
 
+        lblItens.setText(context.getString(R.string.totalItens, String.valueOf(cursor.getLong(cursor.getColumnIndex("contador")))));
         lblTitulo.setText(cursor.getString(cursor.getColumnIndex("titulo")));
         lblDataCompra.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(
                 cursor.getLong(cursor.getColumnIndex("data")))));
