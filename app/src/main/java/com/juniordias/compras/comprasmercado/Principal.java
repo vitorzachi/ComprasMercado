@@ -1,21 +1,20 @@
 package com.juniordias.compras.comprasmercado;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.juniordias.compras.comprasmercado.adapter.ListaCompraAdapter;
 import com.juniordias.compras.comprasmercado.model.dao.ListaComprasDAO;
-import com.juniordias.compras.comprasmercado.model.helper.ListaComprasOpenHelper;
 import com.juniordias.compras.comprasmercado.model.vo.ListaCompras;
 
 
@@ -29,6 +28,8 @@ public class Principal extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         this.listView = (ListView)findViewById(R.id.list);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#69c2f9")));
 
         this.listaComprasDAO = new ListaComprasDAO(this);
         Cursor cursor = this.listaComprasDAO.listar();
@@ -74,6 +75,13 @@ public class Principal extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        adapter.changeCursor(this.listaComprasDAO.listar());
+        adapter.notifyDataSetChanged();
+        super.onResume();
     }
 
     @Override

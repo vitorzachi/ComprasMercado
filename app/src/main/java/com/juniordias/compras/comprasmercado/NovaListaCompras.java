@@ -1,10 +1,12 @@
 package com.juniordias.compras.comprasmercado;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,13 +20,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class NovaListaCompras extends Activity {
+public class NovaListaCompras extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nova_lista_compras);
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#69c2f9")));
+        getSupportActionBar().setTitle(R.string.lblNovaLista);
         ((EditText) findViewById(R.id.edtDataCompra)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

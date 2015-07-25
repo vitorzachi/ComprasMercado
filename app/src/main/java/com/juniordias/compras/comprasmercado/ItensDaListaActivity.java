@@ -2,6 +2,8 @@ package com.juniordias.compras.comprasmercado;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -36,6 +38,8 @@ public class ItensDaListaActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itens_da_lista);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#69c2f9")));
 
         this.listView = (ListView) findViewById(R.id.list);
         this.listaCompras = (ListaCompras) getIntent().getSerializableExtra(chaveLista);

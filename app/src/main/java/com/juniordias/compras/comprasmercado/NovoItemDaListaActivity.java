@@ -3,6 +3,8 @@ package com.juniordias.compras.comprasmercado;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
@@ -33,6 +35,7 @@ public class NovoItemDaListaActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_item_da_lista);
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#69c2f9")));
         if (getIntent().getSerializableExtra(ItensDaListaActivity.chaveLista) != null) {
             listaCompras = (ListaCompras) getIntent().getSerializableExtra(ItensDaListaActivity.chaveLista);
         }
