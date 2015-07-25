@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.juniordias.compras.comprasmercado.tasks.BuscaLocaisProximosTask;
 import com.juniordias.compras.comprasmercado.tasks.LocalProximo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OndeComprarActivity extends FragmentActivity implements LocationListener {
@@ -26,6 +27,7 @@ public class OndeComprarActivity extends FragmentActivity implements LocationLis
     private Location locationAtual;
     private boolean cameraZoomAplicado = false;
     private BuscaLocaisProximosTask task = new BuscaLocaisProximosTask(this);
+    private List<LocalProximo> locaisProximos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class OndeComprarActivity extends FragmentActivity implements LocationLis
             mMap.clear();
             mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.vc_esta_aqui))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+            showMarkers(locaisProximos);
 
             if (!cameraZoomAplicado) {
                 CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
@@ -96,6 +99,7 @@ public class OndeComprarActivity extends FragmentActivity implements LocationLis
     }
 
     public void showMarkers(List<LocalProximo> localProximos) {
+        this.locaisProximos = localProximos;
         LatLng latLng = new LatLng(locationAtual.getLatitude(), locationAtual.getLongitude());
         mMap.clear();
         mMap.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.vc_esta_aqui))
