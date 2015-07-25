@@ -6,6 +6,7 @@
         android:id="@+id/action_novo"
         android:orderInCategory="100"
         android:title="@string/novo_item"
+        android:icon="@drawable/nova_lista"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_onde"
