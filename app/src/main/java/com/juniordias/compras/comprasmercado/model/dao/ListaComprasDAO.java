@@ -22,11 +22,13 @@ public class ListaComprasDAO {
 
     public Cursor listar() {
         SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("select count(l._id) from listacompras l", null);
+        if (c.moveToNext() && c.getLong(0) > 0) {
+            return db.rawQuery("select l._id, l.titulo, l.data, count(i._id) as contador " +
+                    "from listacompras l left join itenscompras i on i.listaCompras=l._id group by l._id", null);
+        }
 
-//        Cursor crs = db.query("listacompras", new String[]{"_id", "titulo", "data"}, null, null, null, null, null);
-        Cursor crs = db.rawQuery("select l._id, l.titulo, l.data, count(i._id) as contador " +
-                "from listacompras l left join itenscompras i", null);
-        return crs;
+        return db.query("listacompras", new String[]{"_id", "titulo", "data"}, null, null, null, null, null);
     }
 
     public void apagar(Integer id) {

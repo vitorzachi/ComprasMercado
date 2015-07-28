@@ -25,7 +25,7 @@ public class ListaCompraAdapter extends CursorAdapter {
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    public View newView(final Context context, Cursor cursor, ViewGroup parent) {
         this.inflater = LayoutInflater.from(context);
         View item = inflater.inflate(R.layout.lista_compras_item, null);
         return item;
@@ -33,6 +33,7 @@ public class ListaCompraAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+
         TextView lblTitulo = (TextView) view.findViewById(R.id.lblNomeListaCompras);
         TextView lblDataCompra = (TextView) view.findViewById(R.id.lblDataCompra);
         TextView lblItens = (TextView) view.findViewById(R.id.lblItens);
